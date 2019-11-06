@@ -10,16 +10,16 @@ import string
 import unittest
 import uuid
 
-from resource_utilities.common.constants import Constants
-from resource_utilities.common.helpers import response
-from resource_utilities.common.encoders import encode_resource, encode_file_metadata, encode_files, encode_creator, \
+from common.constants import Constants
+from common.helpers import response
+from common.encoders import encode_resource, encode_file_metadata, encode_files, encode_creator, \
     encode_metadata
-from resource_utilities.data.creator import Creator
-from resource_utilities.data.file import File
-from resource_utilities.data.file_metadata import FileMetadata
-from resource_utilities.data.metadata import Metadata
-from resource_utilities.data.resource import Resource
-from resource_utilities.data.title import Title
+from data.creator import Creator
+from data.file import File
+from data.file_metadata import FileMetadata
+from data.metadata import Metadata
+from data.resource import Resource
+from data.title import Title
 
 
 class TestHandlerCase(unittest.TestCase):

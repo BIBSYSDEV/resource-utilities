@@ -1,8 +1,9 @@
-from resource_utilities.common.helpers import remove_none_values
-from resource_utilities.data.creator import Creator
-from resource_utilities.data.file_metadata import FileMetadata
-from resource_utilities.data.metadata import Metadata
-from resource_utilities.data.resource import Resource
+from common.helpers import remove_none_values
+
+from data.file_metadata import FileMetadata
+from data.creator import Creator
+from data.metadata import Metadata
+from data.resource import Resource
 
 
 def encode_file_metadata(instance):
