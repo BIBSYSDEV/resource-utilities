@@ -4,6 +4,8 @@ class Constants:
 
     EVENT_BODY = 'body'
     EVENT_HTTP_METHOD = 'httpMethod'
+    EVENT_PATH_PARAMETERS = 'pathParameters'
+    EVENT_PATH_PARAMETER_IDENTIFIER = 'identifier'
     EVENT_RESOURCE_IDENTIFIER = 'resource_identifier'
 
     HTTP_METHOD_GET = 'GET'
