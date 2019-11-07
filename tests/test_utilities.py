@@ -10,6 +10,7 @@ import string
 import unittest
 import uuid
 
+from common.validator import validate_resource_insert, validate_resource_modify
 from common.constants import Constants
 from common.helpers import response
 from common.encoders import encode_resource, encode_file_metadata, encode_files, encode_creator, \
@@ -55,17 +56,53 @@ class TestHandlerCase(unittest.TestCase):
         return Resource(uuid, time_modified, time_created, metadata, files, 'owner@unit.no')
 
     def test_resource(self):
-        resource = self.generate_mock_resource('ebf20333-35a5-4a06-9c58-68ea688a9a8b',
-                                               '2019-11-02T08:46:14.464755+00:00', '2019-11-02T08:46:14.464755+00:00')
+        resource = self.generate_mock_resource('2019-11-02T08:46:14.464755+00:00', '2019-11-02T08:46:14.464755+00:00',
+                                               'ebf20333-35a5-4a06-9c58-68ea688a9a8b')
         Resource.from_dict(resource.__dict__)
 
     def test_helper_response(self):
         _response = response(http.HTTPStatus.OK, 'message')
         self.assertEqual(_response[Constants.RESPONSE_STATUS_CODE], http.HTTPStatus.OK)
 
+    def test_resource_validator_insert(self):
+        resource = self.generate_mock_resource('2019-11-02T08:46:14.464755+00:00', '2019-11-02T08:46:14.464755+00:00',
+                                               'ebf20333-35a5-4a06-9c58-68ea688a9a8b')
+        resource_dict = Resource.from_dict(resource.__dict__)
+        self.assertRaises(ValueError, validate_resource_insert, resource_dict)
+        resource_dict.resource_identifier = None
+        resource_dict.metadata = {}
+        resource_dict.files = 'invalid_type'
+        self.assertRaises(ValueError, validate_resource_insert, resource_dict)
+        resource_dict.metadata = 'invalid_type'
+        self.assertRaises(ValueError, validate_resource_insert, resource_dict)
+        resource_dict.owner = None
+        self.assertRaises(ValueError, validate_resource_insert, resource_dict)
+        resource_dict.files = None
+        self.assertRaises(ValueError, validate_resource_insert, resource_dict)
+        resource_dict.metadata = None
+        self.assertRaises(ValueError, validate_resource_insert, resource_dict)
+
+    def test_resource_validator_modify(self):
+        resource = self.generate_mock_resource('2019-11-02T08:46:14.464755+00:00', '2019-11-02T08:46:14.464755+00:00',
+                                               'ebf20333-35a5-4a06-9c58-68ea688a9a8b')
+        resource_dict = Resource.from_dict(resource.__dict__)
+        resource_dict.metadata = {}
+        resource_dict.files = 'invalid_type'
+        self.assertRaises(ValueError, validate_resource_modify, resource_dict)
+        resource_dict.metadata = 'invalid_type'
+        self.assertRaises(ValueError, validate_resource_modify, resource_dict)
+        resource_dict.owner = None
+        self.assertRaises(ValueError, validate_resource_modify, resource_dict)
+        resource_dict.files = None
+        self.assertRaises(ValueError, validate_resource_modify, resource_dict)
+        resource_dict.metadata = None
+        self.assertRaises(ValueError, validate_resource_modify, resource_dict)
+        resource_dict.resource_identifier = None
+        self.assertRaises(ValueError, validate_resource_modify, resource_dict)
+
     def test_encoders(self):
-        resource = self.generate_mock_resource('ebf20333-35a5-4a06-9c58-68ea688a9a8b',
-                                               '2019-11-02T08:46:14.464755+00:00', '2019-11-02T08:46:14.464755+00:00')
+        resource = self.generate_mock_resource('2019-11-02T08:46:14.464755+00:00', '2019-11-02T08:46:14.464755+00:00',
+                                               'ebf20333-35a5-4a06-9c58-68ea688a9a8b')
         encode_resource(resource)
         encode_metadata(resource.metadata)
         encode_files(resource.files)

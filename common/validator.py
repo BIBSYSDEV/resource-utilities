@@ -12,6 +12,7 @@ def validate_resource_insert(resource):
     elif not isinstance(resource.files, dict):
         raise ValueError('Resource has invalid attribute type for files')
 
+
 def validate_resource_modify(resource):
     if resource.resource_identifier is None:
         raise ValueError('Resource has no identifier')
