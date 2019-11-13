@@ -1,7 +1,7 @@
 import boto3
 from boto3 import Session
 
-from constants import Constants
+from .constants import Constants
 
 _session = Session()
 _regions = _session.get_available_regions(Constants.DDB)
