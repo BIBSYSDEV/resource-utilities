@@ -16,7 +16,7 @@ def _validate_region(region):
         _region = region
     else:
         raise ValueError('Region "%s" is invalid' % region)
-    return region
+    return _region
 
 
 def connect(region):
