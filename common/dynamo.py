@@ -9,16 +9,17 @@ _SESSION = Session()
 _REGIONS = _SESSION.get_available_regions(Constants.ddb())
 
 
-def _validate_region(region):
-    """Validates the region input for DynamoDB"""
+class DynamoDB:
 
-    if region in _REGIONS:
-        _region = region
-    else:
-        raise ValueError('Region "%s" is invalid' % region)
-    return _region
+    def _validate_region(self, region):
+        """Validates the region input for DynamoDB"""
 
+        if region in _REGIONS:
+            _region = region
+        else:
+            raise ValueError('Region "%s" is invalid' % region)
+        return _region
 
-def connect(region):
-    """Returns a Dynamo DB Service Resource in a valid region"""
-    return boto3.resource(Constants.ddb(), _validate_region(region))
+    def connect(self, region):
+        """Returns a Dynamo DB Service Resource in a valid region"""
+        return boto3.resource(Constants.ddb(), self._validate_region(region))

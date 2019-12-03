@@ -7,9 +7,13 @@ from common import dynamo
 
 class TestDynamo(TestCase):
     def test_validate_region(self):
+        ddb = dynamo.DynamoDB()
+
         region = 'Lancaster'
-        self.assertRaisesRegex(ValueError, 'Region "%s" is invalid' % region, dynamo.connect, region)
+        self.assertRaisesRegex(ValueError, 'Region "%s" is invalid' % region, ddb.connect, region)
 
     def test_connect(self):
-        _dynamo = dynamo.connect('eu-west-1')
+        ddb = dynamo.DynamoDB()
+
+        _dynamo = ddb.connect('eu-west-1')
         self.assertTrue(isinstance(_dynamo, ServiceResource), 'Type was not DDB')
