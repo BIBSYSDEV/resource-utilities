@@ -10,8 +10,10 @@ _REGIONS = _SESSION.get_available_regions(Constants.ddb())
 
 
 class DynamoDB:
+    """Provides connection method for AWS DynamoDB"""
 
-    def _validate_region(self, region):
+    @staticmethod
+    def _validate_region(region):
         """Validates the region input for DynamoDB"""
 
         if region in _REGIONS:
