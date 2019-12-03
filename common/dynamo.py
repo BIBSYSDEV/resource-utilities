@@ -1,19 +1,24 @@
+"""Module to provide simple, consistent access to AWS Dynamo DB"""
+
 import boto3
 from boto3 import Session
 
 from .constants import Constants
 
-_session = Session()
-_regions = _session.get_available_regions(Constants.DDB)
+_SESSION = Session()
+_REGIONS = _SESSION.get_available_regions(Constants.ddb())
 
 
 def _validate_region(region):
-    if region in _regions:
-        return region
+    """Validates the region input for DynamoDB"""
+
+    if region in _REGIONS:
+        _region = region
     else:
         raise ValueError('Region "%s" is invalid' % region)
+    return _region
 
 
 def connect(region):
-    return boto3.resource(Constants.DDB, _validate_region(region))
-
+    """Returns a Dynamo DB Service Resource in a valid region"""
+    return boto3.resource(Constants.ddb(), _validate_region(region))
