@@ -13,10 +13,6 @@ class Constants:
     EVENT_PATH_PARAMETER_IDENTIFIER = 'identifier'
     EVENT_RESOURCE_IDENTIFIER = 'resource_identifier'
 
-    HTTP_METHOD_GET = 'GET'
-    HTTP_METHOD_POST = 'POST'
-    HTTP_METHOD_PUT = 'PUT'
-
     JSON_ATTRIBUTE_NAME_RESOURCE = 'resource'
 
     RESPONSE_STATUS_CODE = 'statusCode'
@@ -60,7 +56,7 @@ class Constants:
 
     @staticmethod
     def event_path_parameters():
-        """Returns the key for the path paramenters element of an event"""
+        """Returns the key for the path parameters element of an event"""
         return 'pathParameters'
 
     @staticmethod
@@ -72,21 +68,6 @@ class Constants:
     def event_resource_identifier():
         """Returns the key for the resource identifier element of an event"""
         return 'resource_identifier'
-
-    @staticmethod
-    def http_method_get():
-        """Returns the HTTP method name GET"""
-        return 'GET'
-
-    @staticmethod
-    def http_method_post():
-        """Returns the HTTP method name POST"""
-        return 'POST'
-
-    @staticmethod
-    def http_method_put():
-        """Returns the HTTP method name PUT"""
-        return 'PUT'
 
     @staticmethod
     def json_attribute_name_resource():
