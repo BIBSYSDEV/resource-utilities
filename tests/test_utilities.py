@@ -34,8 +34,9 @@ class TestHandlerCase(unittest.TestCase):
 
     @staticmethod
     def random_word(length):
+        """Generate a random word of variable length"""
         letters = string.ascii_lowercase
-        return ''.join(random.choice(letters) for i in range(length))
+        return ''.join(random.choice(letters) for _counter in range(length))
 
     def generate_mock_resource(self, time_created=None, time_modified=None, uuid=uuid.uuid4().__str__()):
         title_1 = Title('no', self.random_word(6))
