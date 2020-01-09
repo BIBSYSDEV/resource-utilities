@@ -2,9 +2,6 @@ import http
 import os
 import sys
 
-testdir = os.path.dirname(__file__)
-srcdir = '../'
-sys.path.insert(0, os.path.abspath(os.path.join(testdir, srcdir)))
 import random
 import string
 import unittest
@@ -22,6 +19,10 @@ from data.metadata import Metadata
 from data.resource import Resource
 from data.title import Title
 
+testdir = os.path.dirname(__file__)
+srcdir = '../'
+sys.path.insert(0, os.path.abspath(os.path.join(testdir, srcdir)))
+
 
 class TestHandlerCase(unittest.TestCase):
 
@@ -31,7 +32,8 @@ class TestHandlerCase(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def random_word(self, length):
+    @staticmethod
+    def random_word(length):
         letters = string.ascii_lowercase
         return ''.join(random.choice(letters) for i in range(length))
 

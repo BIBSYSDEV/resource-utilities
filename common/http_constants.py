@@ -2,6 +2,7 @@
 
 
 class HttpConstants:
+    """Provides HTTP constants via methods and class variable access"""
 
     HTTP_METHOD_GET = 'GET'
     HTTP_METHOD_POST = 'POST'
