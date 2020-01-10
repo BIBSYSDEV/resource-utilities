@@ -2,7 +2,7 @@ import http
 import os
 import sys
 
-import random
+from random import SystemRandom
 import string
 import unittest
 import uuid
@@ -22,6 +22,7 @@ from data.title import Title
 testdir = os.path.dirname(__file__)
 srcdir = '../'
 sys.path.insert(0, os.path.abspath(os.path.join(testdir, srcdir)))
+_system_random = SystemRandom()
 
 
 class TestHandlerCase(unittest.TestCase):
@@ -36,7 +37,7 @@ class TestHandlerCase(unittest.TestCase):
     def random_word(length):
         """Generate a random word of variable length"""
         letters = string.ascii_lowercase
-        return ''.join(random.choice(letters) for _counter in range(length))
+        return ''.join(letters[_system_random.randrange(length)] for _counter in range(length))
 
     def generate_mock_resource(self, time_created=None, time_modified=None, uuid=uuid.uuid4().__str__()):
         title_1 = Title('no', self.random_word(6))
