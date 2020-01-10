@@ -19,10 +19,13 @@ from data.metadata import Metadata
 from data.resource import Resource
 from data.title import Title
 
-testdir = os.path.dirname(__file__)
-srcdir = '../'
-sys.path.insert(0, os.path.abspath(os.path.join(testdir, srcdir)))
-_system_random = SystemRandom()
+_MOCK_RESOURCE_IDENTIFIER = 'ebf20333-35a5-4a06-9c58-68ea688a9a8b'
+_MOCK_DATE = '2019-11-02T08:46:14.464755+00:00'
+_SYSTEM_RANDOM = SystemRandom()
+
+_TEST_DIR = os.path.dirname(__file__)
+_SRC_DIR = '../'
+sys.path.insert(0, os.path.abspath(os.path.join(_TEST_DIR, _SRC_DIR)))
 
 
 class TestHandlerCase(unittest.TestCase):
@@ -37,9 +40,9 @@ class TestHandlerCase(unittest.TestCase):
     def random_word(length):
         """Generate a random word of variable length"""
         letters = string.ascii_lowercase
-        return ''.join(letters[_system_random.randrange(length)] for _counter in range(length))
+        return ''.join(letters[_SYSTEM_RANDOM.randrange(length)] for _counter in range(length))
 
-    def generate_mock_resource(self, time_created=None, time_modified=None, uuid=uuid.uuid4().__str__()):
+    def generate_mock_resource(self, time_created=None, time_modified=None, resource_identifier=uuid.uuid4().__str__()):
         title_1 = Title('no', self.random_word(6))
         title_2 = Title('en', self.random_word(6))
         titles = {title_1.language_code: title_1.title, title_2.language_code: title_2.title}
@@ -57,11 +60,11 @@ class TestHandlerCase(unittest.TestCase):
         files = dict()
         files[file_1.identifier] = file_1.file_metadata
         files[file_2.identifier] = file_2.file_metadata
-        return Resource(uuid, time_modified, time_created, metadata, files, 'owner@unit.no')
+        return Resource(resource_identifier, time_modified, time_created, metadata, files, 'owner@unit.no')
 
     def test_resource(self):
-        resource = self.generate_mock_resource('2019-11-02T08:46:14.464755+00:00', '2019-11-02T08:46:14.464755+00:00',
-                                               'ebf20333-35a5-4a06-9c58-68ea688a9a8b')
+        resource = self.generate_mock_resource(_MOCK_DATE, _MOCK_DATE,
+                                               _MOCK_RESOURCE_IDENTIFIER)
         Resource.from_dict(resource.__dict__)
 
     def test_helper_response(self):
@@ -69,8 +72,8 @@ class TestHandlerCase(unittest.TestCase):
         self.assertEqual(_response[Constants.RESPONSE_STATUS_CODE], http.HTTPStatus.OK)
 
     def test_resource_validator_insert(self):
-        resource = self.generate_mock_resource('2019-11-02T08:46:14.464755+00:00', '2019-11-02T08:46:14.464755+00:00',
-                                               'ebf20333-35a5-4a06-9c58-68ea688a9a8b')
+        resource = self.generate_mock_resource(_MOCK_DATE, _MOCK_DATE,
+                                               _MOCK_RESOURCE_IDENTIFIER)
         resource_dict = Resource.from_dict(resource.__dict__)
         self.assertRaises(ValueError, validate_resource_insert, resource_dict)
         resource_dict.resource_identifier = None
@@ -87,8 +90,8 @@ class TestHandlerCase(unittest.TestCase):
         self.assertRaises(ValueError, validate_resource_insert, resource_dict)
 
     def test_resource_validator_modify(self):
-        resource = self.generate_mock_resource('2019-11-02T08:46:14.464755+00:00', '2019-11-02T08:46:14.464755+00:00',
-                                               'ebf20333-35a5-4a06-9c58-68ea688a9a8b')
+        resource = self.generate_mock_resource(_MOCK_DATE, _MOCK_DATE,
+                                               _MOCK_RESOURCE_IDENTIFIER)
         resource_dict = Resource.from_dict(resource.__dict__)
         resource_dict.metadata = {}
         resource_dict.files = 'invalid_type'
@@ -105,8 +108,8 @@ class TestHandlerCase(unittest.TestCase):
         self.assertRaises(ValueError, validate_resource_modify, resource_dict)
 
     def test_encoders(self):
-        resource = self.generate_mock_resource('2019-11-02T08:46:14.464755+00:00', '2019-11-02T08:46:14.464755+00:00',
-                                               'ebf20333-35a5-4a06-9c58-68ea688a9a8b')
+        resource = self.generate_mock_resource(_MOCK_DATE, _MOCK_DATE,
+                                               _MOCK_RESOURCE_IDENTIFIER)
         encode_resource(resource)
         encode_metadata(resource.metadata)
         encode_files(resource.files)
