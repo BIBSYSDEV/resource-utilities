@@ -12,9 +12,12 @@ def remove_none_values(temp_value):
     return return_value
 
 
-def response(status_code, body):
+def response(status_code, body, headers=None):
     """Formulates a response with status code and body"""
-    return {
+    composed_response = {
         Constants.RESPONSE_STATUS_CODE: status_code,
         Constants.RESPONSE_BODY: body
     }
+    if headers is not None:
+        composed_response[Constants.RESPONSE_HEADERS] = headers
+    return composed_response
