@@ -6,6 +6,7 @@ class Constants:
 
     ENV_VAR_REGION = 'REGION'
     ENV_VAR_TABLE_NAME = 'TABLE_NAME'
+    ENV_ALLOWED_ORIGIN = 'ALLOWED_ORIGIN'
 
     EVENT_BODY = 'body'
     EVENT_HTTP_METHOD = 'httpMethod'
@@ -43,6 +44,11 @@ class Constants:
     def env_var_table_name():
         """Returns the key name for table name environment variable"""
         return 'TABLE_NAME'
+
+    @staticmethod
+    def env_var_allowed_origin():
+        """Returns the key name for allowed origin environment variable"""
+        return 'ALLOWED_ORIGIN'
 
     @staticmethod
     def event_body():
