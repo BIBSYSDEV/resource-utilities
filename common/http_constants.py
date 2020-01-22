@@ -2,6 +2,7 @@
 
 
 class HttpConstants:
+    """Root class for HTTP constants for use in NVA"""
 
     HTTP_METHOD_GET = 'GET'
     HTTP_METHOD_POST = 'POST'
